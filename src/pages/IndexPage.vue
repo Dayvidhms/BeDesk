@@ -104,6 +104,7 @@ export default defineComponent({
         text-shadow: 2px 4px 3px rgba(0,0,0,0.3);
       }
       button {
+        width: 100%;
         margin: 5px;
         padding: 10px 20px;
         border-radius: 50px;
@@ -123,6 +124,7 @@ export default defineComponent({
         margin: auto;
       }
     .btn-group-index{
+      width: 100%;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -174,7 +176,6 @@ export default defineComponent({
         padding: 10px 20px;
         border-radius: 50px;
         box-shadow: 0 3px 20px 0 #0000003b;
-        height: 100%;
         width: 100%;
       }
     }

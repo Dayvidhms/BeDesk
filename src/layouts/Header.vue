@@ -2,17 +2,11 @@
   <q-layout view="hHh lpR fFf" style="min-height: calc(100vh - 48px - 50px) !important;">
     <q-header reveal elevated class="text-white bgcolor-primary" >
       <q-toolbar>
-        <q-btn class="menu-btn" flat round color="white" icon="menu" @click="toggleDrawer" />
-
         <q-toolbar-title>
           <p>BeDesk</p>
         </q-toolbar-title>
       </q-toolbar>
     </q-header>
-
-    <q-drawer overlay v-model="DrawerOpen" class="bg-primary" side="left" bordered elevated>
-      Teste
-    </q-drawer>
     <slot></slot>
   </q-layout>
 </template>
