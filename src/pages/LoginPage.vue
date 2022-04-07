@@ -126,7 +126,6 @@ export default defineComponent({
     width: 90%;
     height: 100%;
     z-index: 2000;
-    backdrop-filter: blur(4px);
   }
   .login-card{
     display: flex;
@@ -170,6 +169,80 @@ export default defineComponent({
 
 }
 
+
+// mobiles 
+@media screen and (max-width: 920px) {
+  body{
+    margin-top: 48px;
+    max-width: 920px;
+    height: calc((100vh - 48px) - 50px) !important;
+  }
+  #body{
+    display: flex;
+    width: 100%;
+    background: linear-gradient(45deg, #03045E, #00B4D8, #90E0EF, #CAF0F8);
+    background-size: 200% 200%;
+    animation: colors 15s both infinite;
+  }
+
+  .img-login{
+    width: 100%;
+    background-image: url("../assets/login-img.svg");
+    background-repeat: no-repeat;
+    background-size: 95%;
+    background-position: center;
+  }
+  
+  #login{
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    margin: auto;
+    width: 100%;
+    height: 100%;
+    z-index: 2000;
+  }
+  .login-card{
+    display: flex;
+    text-align: center;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+    max-width: 95%;
+    width: auto;
+    color: white;
+  }
+  .header-login{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Fredoka One', cursive;
+    font-size: 36px;
+    text-shadow: 2px 4px 3px rgba(0,0,0,0.3);
+  }
+  .form-login{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    .q-field{
+    }
+
+    a{
+      margin-bottom: 5px;
+      cursor: pointer;
+    }
+  }
+  .login-settings{
+    margin: 0.5rem;
+    display: grid;
+  }
+
+  
+
+}
 
 
 // animation 
