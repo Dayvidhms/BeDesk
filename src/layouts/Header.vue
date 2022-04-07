@@ -3,7 +3,7 @@
     <q-header reveal elevated class="text-white bgcolor-primary" >
       <q-toolbar>
         <q-toolbar-title>
-          <p>BeDesk</p>
+          <p @click="redirectTo('/')">BeDesk</p>
         </q-toolbar-title>
       </q-toolbar>
     </q-header>
@@ -12,19 +12,21 @@
 </template>
 <script>
 import { defineComponent, ref } from 'vue'
+import { useRouter } from 'vue-router'
 
 export default defineComponent({
   name: 'Header',
 
-
   setup () {
-    const DrawerOpen = ref(false)
+    const router = useRouter();
+
+    const redirectTo = (view) => {
+      router.push({ path : view});
+    }
+
 
     return {
-      DrawerOpen,
-      toggleDrawer () {
-        DrawerOpen.value = !DrawerOpen.value
-      }
+      redirectTo
     }
   }
 })
@@ -36,6 +38,7 @@ p{
   margin: auto !important;
 }
 .q-toolbar__title{
+  cursor: pointer;
   display: flex;
   align-items: center;
   place-content: center;

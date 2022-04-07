@@ -11,7 +11,7 @@
                     </div>
                     <div class="btn-group-index">
                         <q-btn text-color="primary" color="white" label="Cadastrar" />
-                        <q-btn color="primary" label="Acessar" />
+                        <q-btn color="primary" label="Acessar" @click="redirectTo('/login')" />
                     </div>
                   </div>
                 <img class="img-search" src="../assets/search-img.svg" alt="Pessoa com um mapa em sua frente e alguns pontos marcados para analise">
@@ -28,6 +28,7 @@
 
 <script>
 import { defineComponent, ref } from 'vue';
+import { useRouter } from 'vue-router';
 import Header from '../layouts/Header.vue';
 import Footer from '../layouts/Footer.vue';
 
@@ -38,9 +39,15 @@ export default defineComponent({
     Footer
   },
   setup () {
+    const router = useRouter();
+
+    const redirectTo = (view) => {
+      router.push({ path : view});
+    }
+
 
     return {
-
+      redirectTo
     }
   }
 })
@@ -52,7 +59,7 @@ export default defineComponent({
 
 // Desktops
 @media screen and (min-width: 920px) {
-  #index{
+  body{
   min-width: 920px;
   min-height: calc((100vh - 48px) - 50px) !important;
   display: flex;
@@ -142,7 +149,7 @@ export default defineComponent({
     justify-content: center;
     margin-top: 48px;
     background: linear-gradient(45deg, #03045E, #00B4D8, #90E0EF, #CAF0F8);
-    background-size: 500% 500%;
+    background-size: 200% 200%;
     animation: colors 15s both infinite;
     height: 100%;
     width: 100%;
@@ -204,6 +211,7 @@ export default defineComponent({
   }
 }
 
+// animation
 @keyframes colors {
   0%{
     background-position: 0% 50%;
