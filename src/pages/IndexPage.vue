@@ -10,7 +10,7 @@
                         <p>Não sofra, encontre sua solução com BeDesk</p>
                     </div>
                     <div class="btn-group-index">
-                        <q-btn text-color="primary" color="white" label="Cadastrar" />
+                        <q-btn text-color="primary" color="white" label="Resgistrar" @click="redirectTo('/cadastro')"/>
                         <q-btn color="primary" label="Acessar" @click="redirectTo('/login')" />
                     </div>
                   </div>

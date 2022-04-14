@@ -13,7 +13,6 @@
               <div class="q-pa-md dados-login" style="max-width: 400px">
                 <q-form
                   @submit="onSubmit"
-                  @reset="onReset"
                   class="q-gutter-md form-login"
                 >
                   <q-input
@@ -44,7 +43,7 @@
 
                   <div class="login-settings">
                     <a>Esqueceu sua senha?</a>
-                    <a>Ainda não tem cadastro? Increva-se agora!</a>
+                    <a @click="redirectTo('/cadastro')">Ainda não tem cadastro? Increva-se agora!</a>
                   </div>
 
                   <div>
@@ -67,6 +66,7 @@
 <script>
 import { useQuasar} from 'quasar';
 import { defineComponent, ref } from 'vue';
+import { useRouter } from 'vue-router';
 import Header from '../layouts/Header.vue';
 import Footer from '../layouts/Footer.vue';
 
@@ -82,9 +82,16 @@ export default defineComponent({
     const name = ref(null)
     const senha = ref(null)
 
+    const router = useRouter();
+
+    const redirectTo = (view) => {
+      router.push({ path : view});
+    }
+
     return {
       name,
       senha,
+      redirectTo,
 
       onSubmit () {
 
@@ -164,7 +171,6 @@ export default defineComponent({
     margin: 0.5rem;
     display: grid;
   }
-
   
 
 }
