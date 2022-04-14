@@ -173,7 +173,7 @@ export default defineComponent({
   }
 
   .img-register{
-    max-width: 100%;
+    width: 100%;
     background-image: url("../assets/register.svg");
     background-repeat: no-repeat;
     background-size: 50%;
