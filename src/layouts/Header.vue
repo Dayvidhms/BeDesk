@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="hHh lpR fFf" style="min-height: calc(100vh - 48px - 50px) !important;">
+  <q-layout view="hHh lpR fFf" style="min-height: 100%">
     <q-header reveal elevated class="text-white bgcolor-primary" >
       <q-toolbar>
         <q-toolbar-title>

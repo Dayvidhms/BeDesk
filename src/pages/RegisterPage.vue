@@ -22,7 +22,7 @@
                       color="white"
                       filled
                       v-model="name"
-                      label="Nome *"
+                      label="Nome"
                       lazy-rules
                       :rules="[ val => val && val.length !== '' || 'Por favor informe seu usuário',
                       ]"
@@ -33,7 +33,7 @@
                       color="white"
                       filled
                       v-model="underName"
-                      label="Sobrenome *"
+                      label="Sobrenome"
                       lazy-rules
                       :rules="[ val => val && val.length !== '' || 'Por favor informe seu usuário',
                       ]"
@@ -46,7 +46,7 @@
                       color="white"
                       filled
                       v-model="user"
-                      label="Usuario *"
+                      label="Usuário"
                       lazy-rules
                       :rules="[ val => val && val.length !== '' || 'Por favor informe seu usuário',
                       ]"
@@ -57,7 +57,7 @@
                       color="white"
                       filled
                       v-model="mail"
-                      label="Email *"
+                      label="Email"
                       lazy-rules
                       :rules="[ val => val && val.length !== '' || 'Por favor informe seu usuário',
                       ]"
@@ -70,7 +70,7 @@
                       color="white"
                       filled
                       v-model="password"
-                      label="Senha *"
+                      label="Senha"
                       lazy-rules
                       :rules="[ val => val && val.length !== '' || 'Por favor informe seu usuário',
                       ]"
@@ -81,14 +81,14 @@
                       color="white"
                       filled
                       v-model="password2"
-                      label="Repita a senha *"
+                      label="Repita a senha"
                       lazy-rules
                       :rules="[ val => val && val.length !== '' || 'Por favor informe seu usuário',
                       ]"
                     />
                   </div>
                   <div class="option-form">
-                    <q-select class="select-form" dark filled v-model="model" :options="options" label="Opção *" />
+                    <q-select class="select-form" dark filled v-model="model" :options="options" label="Tipo de usuário" />
                   </div>
                   <div class="button-form">
                     <q-btn text-color="primary" color="white" label="Limpar" @click="redirectTo('/cadastro')"/>
@@ -142,9 +142,9 @@ export default defineComponent({
       mail,
       password,
       password2,
-      model: ref("Opção"),
+      model: ref(),
       options: [
-        'Atendente', 'Usuario'
+        'Atendente', 'Usuário'
       ],
 
       onSubmit () {
@@ -257,6 +257,7 @@ export default defineComponent({
   body{
     margin-top: 48px;
     max-width: 920px;
+    height: 100%;
     height: calc((100vh - 48px) - 50px) !important;
   }
   #body{
@@ -269,7 +270,6 @@ export default defineComponent({
 
   .img-register{
     width: 100%;
-
     background-repeat: no-repeat;
     background-size: 95%;
     background-position: center;
@@ -283,6 +283,7 @@ export default defineComponent({
     width: 100%;
     height: 100%;
     z-index: 2000;
+    padding: 15px;
   }
   .register-card{
     display: flex;
@@ -303,13 +304,13 @@ export default defineComponent({
     font-size: 36px;
     text-shadow: 2px 4px 3px rgba(0,0,0,0.3);
   }
-  .form-register{
+.form-register{
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-direction: column;
-
+    margin-bottom: 5px;
     .q-field{
+      padding: 0.1rem ;
     }
 
     a{
@@ -321,8 +322,30 @@ export default defineComponent({
     margin: 0.5rem;
     display: grid;
   }
-
-  
+  .q-form{
+    flex-direction: column;
+  }
+  .option-form{
+    width: 100%;
+    display: block;
+    margin: 0px auto;
+    padding-left: 15px;
+  }
+  .select-form{
+    min-width: 100%;
+  }
+  .form-password{
+    padding-bottom: 16px;
+  }
+  .button-form{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    button{
+      margin: 0 auto;
+      width: 100px;
+    }
+  }
 
 }
 

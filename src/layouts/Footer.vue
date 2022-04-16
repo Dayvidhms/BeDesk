@@ -30,5 +30,10 @@ export default defineComponent({
 text{
   font-family: 'Rubik', sans-serif;
 }
-
+.q-page-container{
+  padding-bottom: 0px !important;
+}
+.absolute-bottom{
+  bottom: auto !important;
+}
 </style>
