@@ -67,8 +67,8 @@
 import { useQuasar} from 'quasar';
 import { defineComponent, ref } from 'vue';
 import { useRouter } from 'vue-router';
-import Header from '../layouts/Header.vue';
-import Footer from '../layouts/Footer.vue';
+import Header from '../components/Header.vue';
+import Footer from '../components/Footer.vue';
 
 export default defineComponent({
   name: 'LoginPage',

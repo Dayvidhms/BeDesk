@@ -12,6 +12,10 @@ const routes = [
     path: '/cadastro',
     component: () => import('../pages/RegisterPage.vue'),
   },
+  {
+    path: '/gestao',
+    component: () => import('../pages/GestaoPage.vue'),
+  },
 
   // Always leave this as last one,
   // but you can also remove it
