@@ -18,7 +18,7 @@
                     no-data-label="Nenhum chamado cadastrado."
                     :filter="filter"
                     no-results-label="Nenhum chamado encontrado com os parâmetros selecionados."
-                    >
+                >
                     <template v-slot:top-right>
                         <q-input dark borderless dense debounce="300" v-model="filter" placeholder="Pesquisar">
                         <template v-slot:append>
@@ -53,13 +53,110 @@
                     </template>
                 </q-table>
                 <div class="btn-actions">
-                    <q-btn glossy push color="positive" icon="add" label="Adicionar" />
+                    <q-btn glossy push color="positive" icon="add" label="Adicionar" @click="addModal = true"/>
                     <q-btn glossy push color="negative" icon="remove" label="Excluir" />
                     <q-btn glossy push color="warning" icon="edit" label="Alterar" />
                 </div>
+                <div class="modal">
+                    <q-dialog
+                        v-model="addModal"
+                        full-height
+                        full-width
+                        transition-duration="700"
+                        transition-hide="fade"
+                        transition-show="fade"
+                        
+                        >
+                        <q-card class="modal-content column full-height ">
+                            <q-card-section>
+                            <div class="text-h6 modal-title">Cadastrar Incidente</div>
+                            </q-card-section>
+
+                            <q-card-section class="col q-pt-none">
+                                <div class="header-content">
+                                    <div class="chamados">
+                                        <p>Chamado:</p>
+                                        <q-input outlined v-model="chamado" label="Chamado" />                                        
+                                    </div>
+                                    <div class="datas">
+                                        <p>Data:</p>
+                                        <q-input outlined v-model="dataHoje" readonly/>
+                                    </div>
+                                    <div class="users">
+                                        <p>Usuário:</p>
+                                        <q-input outlined v-model="usuario" readonly />
+                                    </div>
+                                </div>
+                                <div class="body-content">
+                                    <div class="area">
+                                        <p>Área:</p>
+                                        <q-select outlined v-model="area" :options="options" label="Área" />                                   
+                                    </div>
+                                    <div class="status">
+                                        <p>Status:</p>
+                                        <q-select outlined v-model="status" :options="options" label="Status" />
+                                    </div>
+                                    <div class="nivel">
+                                        <p>Nível:</p>
+                                        <q-select outlined v-model="nivel" :options="options" label="Nível" />
+                                    </div>
+                                </div>
+                                <div class="descript">
+                                    <p>Descrição:</p>
+                                    <q-input 
+                                        bottom-slots 
+                                        v-model="description" 
+                                        label="Descrição" 
+                                        counter 
+                                        maxlength="150"
+                                        filled
+                                        autogrow
+                                    >
+                                        <template v-slot:hint>
+                                        Caracteres
+                                        </template>
+                                    </q-input>
+                                </div>
+
+                                <div class="actions">
+                                    <p>Ações:</p>
+                                    <div class="table-action">
+                                        <q-table
+                                        :rows="actionRows"
+                                        :columns="actionColumns"
+                                        row-key="name"
+                                        :rows-per-page-options="maxRows"
+                                        bordered
+                                        separator="cell"
+                                        no-data-label="Nenhum chamado cadastrado."
+                                        :filter="filter"
+                                        no-results-label="Nenhum chamado encontrado com os parâmetros selecionados."
+                                        />
+                                    </div>
+                                </div>
+
+                                <div class="uploadDoc">
+                                    <p>Anexos:</p>
+                                    <q-input
+                                        @update:model-value="val => { files = val }"
+                                        multiple
+                                        filled
+                                        dense
+                                        type="file"
+                                    />
+                                </div>
+                                
+                            </q-card-section>
+
+                            <q-card-actions align="right" class="bg-white text-primary">
+                            <q-btn label="Cancelar" v-close-popup />
+                            <q-btn label="Gravar" v-close-popup />
+                            </q-card-actions>
+                        </q-card>
+                    </q-dialog>
+                </div>
             </div>
         </div>
-        
     </body>
 </Header>
 <Footer>
@@ -73,19 +170,6 @@ import { defineComponent, ref } from 'vue';
 import Header from '../components/Header.vue';
 import Footer from '../components/Footer.vue';
 
-export default defineComponent({
-  name: 'GestaoPage',
-  components: {
-    Header,
-    Footer
-  },
-  setup () {
-
-    const router = useRouter();
-
-    const redirectTo = (view) => {
-      router.push({ path : view});
-    };
     const columns = [
         { name: 'codigo', align: 'center', label: 'Código', field: 'codigo', sortable: true, sort: (a, b) => parseInt(a, 10) - parseInt(b, 10)},
         { name: 'data', align: 'center', label: 'Data', field: 'data' },
@@ -153,12 +237,60 @@ export default defineComponent({
         },
     ]
 
+
+    const actionColumns = [
+        { name: 'data', align: 'center', label: 'Data', field: 'data', sortable: true, sort: (a, b) => parseInt(a, 10) - parseInt(b, 10)},
+        { name: 'descricao', align: 'center', label: 'Descrição', field: 'descricao', sortable: true, sort: (a, b) => parseInt(a, 10) - parseInt(b, 10)  },
+        { name: 'usuario', align: 'center', label: 'Usuário', field: 'usuario', sortable: true, sort: (a, b) => parseInt(a, 10) - parseInt(b, 10) },
+    ]
+    const actionRows = [
+        {
+            data: '25/05/2022',
+            descricao: 'Problema para acessar a internet',
+            usuario: 'Gabriel',
+        },
+        {
+            data: '25/05/2022',
+            descricao: 'Problema para acessar a internet',
+            usuario: 'Gabriel',
+        },
+        {
+            data: '25/05/2022',
+            descricao: 'Problema para acessar a internet',
+            usuario: 'Gabriel',
+        },
+        {
+            data: '25/05/2022',
+            descricao: 'Problema para acessar a internet',
+            usuario: 'Gabriel',
+        },
+    ]
+
+export default defineComponent({
+  name: 'GestaoPage',
+  components: {
+    Header,
+    Footer,
+  },
+  setup () {
+
+    const router = useRouter();
+
+    const redirectTo = (view) => {
+      router.push({ path : view});
+    };
+
     return {
       redirectTo,
       columns,
       rows,
+      actionColumns,
+      actionRows,
       filter: ref(''),
-    
+      addModal: ref(false),
+      description: ref(''),
+      file: ref(null),
+      maxRows: [2],
     }
   }
 })
@@ -223,6 +355,71 @@ export default defineComponent({
           margin: 20px;
       }
       
+  }
+  .modal-title{
+      display: flex;
+      width: 100%;
+      justify-content: center;
+      align-items: center;
+  }
+  .header-content{
+    display: flex;
+    justify-content: center;
+      p{
+          margin: 0px 20px;
+          font-size: 16px;
+      }
+      label{
+          width: 200px;
+      }
+  }
+  .header-content{
+    .chamados, .datas, .users{
+        padding: 10px 1.1rem;;
+    }
+  }
+  .body-content{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    p{
+        margin: 0px 20px;
+        font-size: 16px;
+    }
+    label{
+        width: 200px;
+      }
+    .area, .status, .nivel{
+        padding: 10px 1.1rem;;
+    }
+  }
+  .modal-content{
+    max-width: 60% !important;
+    max-height: 100% !important;
+  }
+  .descript{
+    margin: 0 auto;
+    width: 90%;
+    p{
+        margin: 5px 0;
+    }
+  }
+  .uploadDoc{
+    margin: 0 auto;
+    width: 90%;
+    p{
+        margin: 15px 0px 5px 0;
+    }
+  }
+  .actions{
+    margin: 0 auto;
+    width: 90%;
+    p{
+        margin: 15px 0px 5px 0;
+    }
+  }
+  .q-card__section--vert{
+      padding: 8px !important;
   }
 }
 
