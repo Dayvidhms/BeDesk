@@ -20,7 +20,7 @@
                     label-color="white"
                     color="white"
                     filled
-                    v-model="name"
+                    v-model="user"
                     label="Usuário *"
                     lazy-rules
                     :rules="[ val => val && val.length !== '' || 'Por favor informe seu usuário',
@@ -33,7 +33,7 @@
                     color="white"
                     filled
                     type="password"
-                    v-model="senha"
+                    v-model="password"
                     label="Senha *"
                     lazy-rules
                     :rules="[
@@ -47,7 +47,7 @@
                   </div>
 
                   <div>
-                    <q-btn label="Entrar" type="submit" color="primary"/>
+                    <q-btn label="Entrar" type="submit" color="primary" @click.prevent="userLogin()"/>
                   </div>
                 </q-form>
               </div>
@@ -70,6 +70,9 @@ import { useRouter } from 'vue-router';
 import Header from '../components/Header.vue';
 import Footer from '../components/Footer.vue';
 
+import axios from 'axios';
+import swal from 'sweetalert';
+
 export default defineComponent({
   name: 'LoginPage',
   components: {
@@ -79,8 +82,8 @@ export default defineComponent({
   setup () {
     const $q = useQuasar()
 
-    const name = ref(null)
-    const senha = ref(null)
+    const user = ref(null)
+    const password = ref(null)
 
     const router = useRouter();
 
@@ -89,15 +92,36 @@ export default defineComponent({
     }
 
     return {
-      name,
-      senha,
+      user,
+      password,
       redirectTo,
 
       onSubmit () {
 
       }
-    
+
     }
+  },
+
+    methods:{
+      userLogin(){
+        const postData = {user: this.user, password: this.password};
+
+          axios.post("http://127.0.0.1:3000/login", postData)
+          .then(res=>{
+            if(res.data == true){
+              this.redirectTo('/gestao');
+            }else{
+            swal({
+              title: "Credenciais incorretas.",
+              text: "Senha ou usuário incorretos.",
+              icon: "error",
+              button: "Ok",
+          });
+            }
+          })
+          .catch(error=>console.log(error));
+      }
   }
 })
 </script>
@@ -124,7 +148,7 @@ export default defineComponent({
     background-size: 60%;
     background-position: center;
   }
-  
+
   #login{
     justify-content: center;
     align-items: center;
@@ -171,12 +195,12 @@ export default defineComponent({
     margin: 0.5rem;
     display: grid;
   }
-  
+
 
 }
 
 
-// mobiles 
+// mobiles
 @media screen and (max-width: 920px) {
   body{
     margin-top: 48px;
@@ -198,7 +222,7 @@ export default defineComponent({
     background-size: 95%;
     background-position: center;
   }
-  
+
   #login{
     justify-content: center;
     align-items: center;
@@ -246,12 +270,12 @@ export default defineComponent({
     display: grid;
   }
 
-  
+
 
 }
 
 
-// animation 
+// animation
 @keyframes colors {
   0%{
     background-position: 0% 50%;

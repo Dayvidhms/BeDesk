@@ -14,7 +14,7 @@
                 <q-form
                   @submit="onSubmit"
                   class="q-gutter-md form-register"
-                > 
+                >
                   <div class="names form-register">
                     <q-input
                       dark
@@ -32,7 +32,7 @@
                       label-color="white"
                       color="white"
                       filled
-                      v-model="underName"
+                      v-model="surName"
                       label="Sobrenome"
                       lazy-rules
                       :rules="[ val => val && val.length !== '' || 'Por favor informe seu usuário',
@@ -92,7 +92,7 @@
                   </div>
                   <div class="button-form">
                     <q-btn text-color="primary" color="white" label="Limpar" @click="redirectTo('/cadastro')"/>
-                    <q-btn color="primary" label="Confirmar" @click="redirectTo('/login')" />
+                    <q-btn color="primary" label="Confirmar" @click.prevent="userPost()" />
                   </div>
                 </q-form>
               </div>
@@ -114,6 +114,9 @@ import { defineComponent, ref } from 'vue';
 import Header from '../components/Header.vue';
 import Footer from '../components/Footer.vue';
 
+import axios from 'axios';
+import swal from 'sweetalert';
+
 export default defineComponent({
   name: 'RegisterPage',
   components: {
@@ -122,12 +125,12 @@ export default defineComponent({
   },
   setup () {
 
-    const name = ref(null)
-    const underName = ref(null)
-    const mail = ref(null)
-    const user = ref(null)
-    const password2 = ref(null)
-    const password = ref(null)
+    const name = ref("");
+    const surName = ref("");
+    const mail = ref("");
+    const user = ref("");
+    const password2 = ref("");
+    const password = ref("");
 
     const router = useRouter();
 
@@ -137,7 +140,7 @@ export default defineComponent({
 
     return {
       name,
-      underName,
+      surName,
       user,
       mail,
       password,
@@ -151,7 +154,85 @@ export default defineComponent({
 
       },
       redirectTo
-    
+
+    }
+  },
+
+  methods:{
+            userPost(){
+
+        if(this.name === ""){
+
+          swal({
+            title: "Está faltando alguma informação!",
+            text: "Preencha o campo nome.",
+            icon: "error",
+            button: "Ok",
+      });
+
+      }else if(this.surName === ""){
+           swal({
+            title: "Está faltando alguma informação!",
+            text: "Preencha o campo sobrenome.",
+            icon: "error",
+            button: "Ok",
+      });
+      }else if(this.user === ""){
+           swal({
+            title: "Está faltando alguma informação!",
+            text: "Preencha o campo usuário.",
+            icon: "error",
+            button: "Ok",
+      });
+      }else if(this.mail === ""){
+           swal({
+            title: "Está faltando alguma informação!",
+            text: "Preencha o campo e-mail.",
+            icon: "error",
+            button: "Ok",
+      });
+      }else if(this.password === ""){
+           swal({
+            title: "Está faltando alguma informação!",
+            text: "Preencha o campo senha.",
+            icon: "error",
+            button: "Ok",
+      });
+      }else if(this.password != this.password2){
+                   swal({
+            title: "Senhas não conferem!",
+            text: "A senhas preenchidas não são iguais.",
+            icon: "error",
+            button: "Ok",
+      });
+      }else{
+
+        const postData = {name: this.name, surname: this.surName, mail: this.mail, user: this.user, password: this.password, tipo: 1};
+
+        axios.post("http://127.0.0.1:3000/inserirUsuario", postData)
+        .then(res=>{
+
+          if(res.data == true){
+
+          swal({
+            title: "Registrado com sucesso.",
+            text: "Você será redirecionado para a tela de login.",
+            icon: "success",
+            button: "Ok",
+      });
+
+      this.redirectTo('/login');
+      }else{
+              swal({
+            title: "Falha no registro.",
+            text: "Houve algum erro ao registrar o usuário.",
+            icon: "error",
+            button: "Ok",
+        });
+      }
+        })
+        .catch(console.log('erro de conexão'));
+      }
     }
   }
 })
@@ -179,7 +260,7 @@ export default defineComponent({
     background-size: 50%;
     background-position: bottom right;
   }
-  
+
   #register{
     justify-content: center;
     align-items: center;
@@ -252,7 +333,7 @@ export default defineComponent({
 }
 
 
-// mobiles 
+// mobiles
 @media screen and (max-width: 920px) {
   body{
     margin-top: 48px;
@@ -274,7 +355,7 @@ export default defineComponent({
     background-size: 95%;
     background-position: center;
   }
-  
+
   #register{
     justify-content: center;
     align-items: center;
@@ -350,7 +431,7 @@ export default defineComponent({
 }
 
 
-// animation 
+// animation
 @keyframes colors {
   0%{
     background-position: 0% 50%;
