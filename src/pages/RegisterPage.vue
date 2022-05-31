@@ -88,7 +88,7 @@
                     />
                   </div>
                   <div class="option-form">
-                    <q-select class="select-form" dark filled v-model="model" :options="options" label="Tipo de usuário" />
+                    <q-select class="select-form" dark filled v-model="tipo" :options="options" label="Tipo de usuário" emit-value map-options />
                   </div>
                   <div class="button-form">
                     <q-btn text-color="primary" color="white" label="Limpar" @click="redirectTo('/cadastro')"/>
@@ -131,6 +131,7 @@ export default defineComponent({
     const user = ref("");
     const password2 = ref("");
     const password = ref("");
+    const tipo = ref("");
 
     const router = useRouter();
 
@@ -145,9 +146,9 @@ export default defineComponent({
       mail,
       password,
       password2,
-      model: ref(),
+      tipo,
       options: [
-        'Atendente', 'Usuário'
+        {label:'Atendente', value:1}, {label:'Usuário', value: 2}
       ],
 
       onSubmit () {
@@ -159,7 +160,7 @@ export default defineComponent({
   },
 
   methods:{
-            userPost(){
+      userPost(){
 
         if(this.name === ""){
 
@@ -199,17 +200,24 @@ export default defineComponent({
             button: "Ok",
       });
       }else if(this.password != this.password2){
-                   swal({
+          swal({
             title: "Senhas não conferem!",
             text: "A senhas preenchidas não são iguais.",
             icon: "error",
             button: "Ok",
       });
+      }else if(this.tipo == 0){
+          swal({
+            title: "Está faltando alguma informação!",
+            text: "Selecione o tipo de usuário.",
+            icon: "error",
+            button: "Ok",
+      });
       }else{
 
-        const postData = {name: this.name, surname: this.surName, mail: this.mail, user: this.user, password: this.password, tipo: 1};
+        const postData = {name: this.name, surname: this.surName, mail: this.mail, user: this.user, password: this.password, tipo: this.tipo};
 
-        axios.post("http://127.0.0.1:3000/inserirUsuario", postData)
+        axios.post("http://127.0.0.1:3000/usuario/inserir", postData)
         .then(res=>{
 
           if(res.data == true){
@@ -219,9 +227,9 @@ export default defineComponent({
             text: "Você será redirecionado para a tela de login.",
             icon: "success",
             button: "Ok",
-      });
+      }).then(()=>this.redirectTo('/login'));
 
-      this.redirectTo('/login');
+
       }else{
               swal({
             title: "Falha no registro.",
@@ -231,7 +239,9 @@ export default defineComponent({
         });
       }
         })
-        .catch(console.log('erro de conexão'));
+        .catch(function (error){
+          console.log('error: ' + error);
+        });
       }
     }
   }

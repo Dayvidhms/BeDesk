@@ -107,10 +107,21 @@ export default defineComponent({
       userLogin(){
         const postData = {user: this.user, password: this.password};
 
-          axios.post("http://127.0.0.1:3000/login", postData)
+          axios.post("http://127.0.0.1:3000/usuario/login", postData)
           .then(res=>{
-            if(res.data == true){
-              this.redirectTo('/gestao');
+
+            if(res.data.value != 0){
+                swal({
+              title: "Logado com sucesso.",
+              text: "Você será redirecionado para a tela de gestão de chamados.",
+              icon: "success",
+              button: "Ok",
+            }).then(()=>{
+              document.cookie='user=' + res.data.userId;
+              document.cookie='tipo=' + res.data.tipo;
+            })
+            .then(()=>this.redirectTo('/gestao'));
+
             }else{
             swal({
               title: "Credenciais incorretas.",
